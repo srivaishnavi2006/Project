@@ -40,7 +40,6 @@ def start_game():
     else:
         print(Fore.RED + "Invalid choice. Game Over.")
 
-# Start the game loop
 while True:
     start_game()
     play_again = input(Fore.BLUE + "\nDo you want to play again? (yes/no): ").lower()
