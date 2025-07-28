@@ -2,117 +2,227 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Complaint Registration</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f9f0f5;
-      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #e0f7f7, #ccf2f2);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 600px;
-      background: #fff;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-      margin: auto;
+      width: 90%;
+      max-width: 700px;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
     h2 {
       text-align: center;
-      color: #b30059;
+      color: #00796b;
+      margin-bottom: 30px;
     }
 
     label {
-      font-weight: bold;
+      font-weight: 600;
+      display: block;
+      margin-top: 15px;
     }
 
-    select, input[type="file"], button, textarea {
+    input, select, textarea, button {
       width: 100%;
       padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
-      border-radius: 8px;
+      margin-top: 8px;
+      margin-bottom: 15px;
       border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
     }
 
     button {
-      background-color: #b30059;
+      background-color: #00796b;
       color: white;
-      cursor: pointer;
+      border: none;
+      font-size: 0.9rem;
+      padding: 8px;
+      margin: 5px;
+      width: auto;
     }
 
-    video {
+    button:hover {
+      background-color: #004d40;
+    }
+
+    video, audio, canvas {
       width: 100%;
       border-radius: 10px;
       margin-top: 10px;
+      background: #f0f0f0;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      color: #00695c;
+      margin-top: 25px;
+      font-weight: bold;
+    }
+
+    .record-section {
+      border: 1px solid #b2dfdb;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      background-color: #e0f2f1;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Register Complaint</h2>
+    <h2>Register Your Complaint</h2>
 
-    <label for="complaintType">Type of Complaint:</label>
-    <select id="complaintType">
-      <option value="Enter">Enter</option>
-      <option value="Verbal Harassment">Verbal Harassment</option>
-      <option value="Physical Harassment">Physical Harassment</option>
-      <option value="Sexual Harassment">Sexual Harassment</option>
-      <option value="Discriminatory Harassment">Discriminatory Harassment</option>
-      <option value="other">Other</option>
-    </select>
+    <label for="description">Description</label>
+    <textarea id="description" rows="4" placeholder="Enter full details..."></textarea>
 
-    <label for="description">Complaint Description:</label>
-    <textarea rows="4" placeholder="Enter details..."></textarea>
+    <label for="date">Date of Incident</label>
+    <input type="date" id="date">
 
-    <label for="videoUpload">Upload Video Evidence:</label>
-    <input type="file" id="videoUpload" accept="video/*">
+    <label for="time">Time of Incident</label>
+    <input type="time" id="time">
 
-    <label>Record Video Instantly:</label>
-    <video id="preview" autoplay muted></video>
-    <button onclick="startRecording()">Start Recording</button>
-    <button onclick="stopRecording()">Stop Recording</button>
+    <label for="location">Location</label>
+    <input type="text" id="location" placeholder="Enter exact location...">
 
-    <br><br>
+    <label for="phone">Phone Number (optional)</label>
+    <input type="tel" id="phone" placeholder="Enter your contact number (optional)">
+
+    <label for="mediaUpload">Upload Proof from Gallery (Audio / Video / Photo)</label>
+    <input type="file" id="mediaUpload" accept="image/,video/,audio/*">
+
+    <div class="section-title">Or Capture Proof Instantly</div>
+
+    <div class="record-section">
+      <label>Camera Access (Photo or Video):</label>
+      <video id="videoPreview" playsinline autoplay muted></video>
+      <canvas id="photoCanvas" style="display:none;"></canvas>
+      <div>
+        <button onclick="startCamera()">Start Camera</button>
+        <button onclick="takePhoto()">📷 Capture Photo</button>
+        <button onclick="startVideoRecording()">🎥 Start Video</button>
+        <button onclick="stopVideoRecording()">⏹ Stop Video</button>
+      </div>
+    </div>
+
+    <div class="record-section">
+      <label>Audio Recording:</label>
+      <audio id="audioPlayback" controls></audio>
+      <div>
+        <button onclick="startAudioRecording()">🎙️ Start Audio</button>
+        <button onclick="stopAudioRecording()">⏹ Stop Audio</button>
+      </div>
+    </div>
+
     <button onclick="submitComplaint()">Submit Complaint</button>
   </div>
 
   <script>
-    let mediaRecorder;
-    let recordedChunks = [];
+    let videoStream;
+    let mediaRecorderVideo;
+    let recordedVideoChunks = [];
 
-    async function startRecording() {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      document.getElementById('preview').srcObject = stream;
+    let mediaRecorderAudio;
+    let recordedAudioChunks = [];
 
-      recordedChunks = [];
-      mediaRecorder = new MediaRecorder(stream);
-
-      mediaRecorder.ondataavailable = (e) => {
-        if (e.data.size > 0) recordedChunks.push(e.data);
-      };
-
-      mediaRecorder.start();
-      alert('Recording started...');
+    async function startCamera() {
+      try {
+        videoStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        const video = document.getElementById('videoPreview');
+        video.srcObject = videoStream;
+        video.play();
+        alert('Camera started');
+      } catch (err) {
+        alert('Camera/Microphone access denied or not available.');
+      }
     }
 
-    function stopRecording() {
-      mediaRecorder.stop();
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(recordedChunks, { type: 'video/webm' });
-        const videoURL = URL.createObjectURL(blob);
-        document.getElementById('preview').src = videoURL;
+    function takePhoto() {
+      const video = document.getElementById('videoPreview');
+      if (!video.srcObject && !video.src) {
+        alert("Please start the camera first.");
+        return;
+      }
+      const canvas = document.getElementById('photoCanvas');
+      canvas.style.display = 'block';
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+      alert('Photo captured!');
+    }
 
-        // You can upload blob to server here if needed
-        alert('Recording stopped and preview shown.');
-      };
+    function startVideoRecording() {
+      if (!videoStream) {
+        alert("Please start the camera first.");
+        return;
+      }
+      recordedVideoChunks = [];
+      mediaRecorderVideo = new MediaRecorder(videoStream);
+      mediaRecorderVideo.ondataavailable = e => { if (e.data.size > 0) recordedVideoChunks.push(e.data); };
+      mediaRecorderVideo.start();
+      alert('Video recording started...');
+    }
+
+    function stopVideoRecording() {
+      if (mediaRecorderVideo && mediaRecorderVideo.state !== "inactive") {
+        mediaRecorderVideo.stop();
+        mediaRecorderVideo.onstop = () => {
+          const blob = new Blob(recordedVideoChunks, { type: 'video/webm' });
+          const url = URL.createObjectURL(blob);
+          const video = document.getElementById('videoPreview');
+          video.srcObject = null;
+          video.src = url;
+          alert('Video recording stopped. Preview ready.');
+        };
+      }
+      if (videoStream) {
+        videoStream.getTracks().forEach(track => track.stop());
+      }
+    }
+
+    async function startAudioRecording() {
+      try {
+        const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        recordedAudioChunks = [];
+        mediaRecorderAudio = new MediaRecorder(audioStream);
+        mediaRecorderAudio.ondataavailable = e => { if (e.data.size > 0) recordedAudioChunks.push(e.data); };
+        mediaRecorderAudio.start();
+        alert('Audio recording started...');
+      } catch (err) {
+        alert('Microphone access denied or not available.');
+      }
+    }
+
+    function stopAudioRecording() {
+      if (mediaRecorderAudio && mediaRecorderAudio.state !== "inactive") {
+        mediaRecorderAudio.stop();
+        mediaRecorderAudio.onstop = () => {
+          const blob = new Blob(recordedAudioChunks, { type: 'audio/webm' });
+          const url = URL.createObjectURL(blob);
+          document.getElementById('audioPlayback').src = url;
+          alert('Audio recording stopped. Playback ready.');
+        };
+      }
     }
 
     function submitComplaint() {
-      alert("Complaint submitted successfully!");
-      // You can integrate real submission logic using PHP/Node/AWS etc.
+      alert("Complaint submitted successfully!\n(This is a front-end demo. Backend not yet connected.)");
     }
   </script>
 </body>
