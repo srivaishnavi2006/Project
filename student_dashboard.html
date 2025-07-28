@@ -4,10 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Student Dashboard - AWS</title>
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #fff0f5;
+      background-color: #e0f7f7; /* light teal background */
       margin: 0;
       height: 100vh;
       display: flex;
@@ -15,7 +16,7 @@
     }
 
     header {
-      background-color: #ec407a;
+      background-color: #008080; /* teal */
       color: white;
       padding: 20px;
       text-align: center;
@@ -31,6 +32,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
     }
 
     .dashboard {
@@ -42,34 +44,44 @@
 
     .module {
       background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 128, 128, 0.3);
       width: 280px;
       padding: 25px;
       text-align: center;
-      transition: transform 0.2s ease-in-out;
+      transition: transform 0.2s ease-in-out, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid #00808030;
     }
 
     .module:hover {
       transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 128, 128, 0.4);
     }
 
     .icon {
       font-size: 40px;
       margin-bottom: 15px;
-      color: #c2185b;
+      color: #006666; /* slightly darker teal */
     }
 
     .module h2 {
       font-size: 1.3rem;
       margin-bottom: 10px;
-      color: #333;
+      color: #004d4d; /* darker teal text */
     }
 
     @media (min-width: 768px) {
       .dashboard {
         flex-direction: row;
       }
+    }
+
+    /* Remove default link styles */
+    a {
+      text-decoration: none;
+      color: inherit;
     }
   </style>
 </head>
@@ -81,6 +93,8 @@
 
   <div class="dashboard-container">
     <section class="dashboard">
+      
+      <!-- Complaint Module -->
       <a href="complaint.html">
         <div class="module">
           <div class="icon">📝</div>
@@ -89,19 +103,22 @@
         </div>
       </a>
 
+      <!-- Safety Measures -->
       <div class="module">
         <div class="icon">🛡️</div>
         <h2>Safety Measures</h2>
         <p>Read safety guidelines and self-protection tips.</p>
       </div>
 
+      <!-- Alert -->
       <a href="alert.html">
         <div class="module">
-        <div class="icon">🚨</div>
-        <h2>Alert</h2>
-        <p>Use this in emergency to send an SOS alert.</p>
-      </div>
-       </a>
+          <div class="icon">🚨</div>
+          <h2>Alert</h2>
+          <p>Use this in emergency to send an SOS alert.</p>
+        </div>
+      </a>
+
     </section>
   </div>
 
