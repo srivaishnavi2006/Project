@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard - Teal Theme</title>
+  <!-- Load Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .sidebar {
+      width: 220px;
+      background-color: #006666;
+      color: #ecf0f1;
+      padding-top: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #ecf0f1;
+      padding: 10px 20px;
+      text-decoration: none;
+    }
+
+    .sidebar a:hover {
+      background-color: #005555;
+    }
+
+    .main {
+      flex: 1;
+      background-color: #ecf0f1;
+      padding: 20px;
+      overflow: auto;
+    }
+
+    .header {
+      background-color: #008080;
+      color: white;
+      padding: 10px 20px;
+    }
+
+    .modules {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .card h3 {
+      margin: 15px 0 5px;
+      font-size: 1.4em;
+      letter-spacing: 1px;
+      color: #008080;
+      font-weight: bold;
+      transition: color 0.2s ease;
+    }
+
+    .card:hover h3 {
+      color: #005555;
+    }
+
+    .card i {
+      font-size: 40px;
+      color: #008080;
+    }
+
+    .card p {
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    #dashboard {
+      display: flex;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dashboard (Now loads by default) -->
+  <div id="dashboard">
+    <div class="sidebar">
+      <h2>Admin</h2>
+      <a href="#">Dashboard</a>
+      <a href="#">Complaint</a>
+      <a href="#">Claims</a>
+      <a href="#">Alert</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </div>
+    <div class="main">
+      <div class="header">
+        <h1>Welcome, Admin</h1>
+      </div>
+
+      <h2>Modules</h2>
+      <div class="modules">
+        <div class="card">
+          <i class="fas fa-comments"></i>
+          <h3>Complaint</h3>
+          <p>Manage and view complaints</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-file-alt"></i>
+          <h3>Claims</h3>
+          <p>Handle user claims</p>
+        </div>
+        <div class="card">
+          <i class="fas fa-exclamation-circle"></i>
+          <h3>Alert</h3>
+          <p>View alerts and notifications</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      alert("Logout clicked — redirect to login or another page if needed.");
+    }
+  </script>
+
+</body>
+</html>
