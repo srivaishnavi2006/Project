@@ -7,14 +7,14 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #ffe6f0;
+      background-color: #e0f7f7;
       margin: 0;
       padding: 0;
-      color: #333;
+      color: #004d4d;
     }
 
     header {
-      background-color: #ec407a;
+      background-color: #008080;
       color: white;
       padding: 2rem;
       text-align: center;
@@ -47,7 +47,7 @@
     }
 
     .alert-button {
-      background-color: #de1616;
+      background-color: #008080;
       color: white;
       font-size: 1.4rem;
       padding: 1rem 2.5rem;
@@ -55,22 +55,22 @@
       border-radius: 12px;
       cursor: pointer;
       transition: background 0.3s ease;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 5px 10px rgba(0, 128, 128, 0.3);
     }
 
     .alert-button:hover {
-      background-color: #cc0000;
+      background-color: #006666;
     }
 
     .subtext {
       font-size: 0.95rem;
       margin-top: 0.6rem;
-      color: #555;
+      color: #336666;
     }
 
     .info-box, .tips-box, .contact-box {
-      background: #fff0f5;
-      border-left: 5px solid #ff3399;
+      background: #f0fdfd;
+      border-left: 5px solid #008080;
       border-radius: 10px;
       padding: 1.2rem;
       margin-top: 1.5rem;
@@ -83,10 +83,10 @@
     footer {
       margin-top: 2rem;
       text-align: center;
-      background: #ffd6e8;
+      background: #cceeee;
       padding: 1rem;
       font-size: 0.95rem;
-      color: #77002b;
+      color: #004d4d;
     }
 
     .contact-form input {
@@ -95,13 +95,13 @@
       margin-top: 0.5rem;
       font-size: 1rem;
       border-radius: 6px;
-      border: 1px solid #ccc;
+      border: 1px solid #88cccc;
     }
 
     .contact-form button {
       padding: 0.6rem 1.2rem;
       font-size: 1rem;
-      background-color: #e6005c;
+      background-color: #006666;
       color: white;
       border: none;
       border-radius: 6px;
@@ -109,7 +109,7 @@
     }
 
     .contact-form button:hover {
-      background-color: #cc0052;
+      background-color: #004d4d;
     }
 
     .contact-list {
@@ -117,7 +117,7 @@
     }
 
     .contact-item {
-      background-color: #ffe6f0;
+      background-color: #d6f6f6;
       padding: 0.5rem 1rem;
       margin-bottom: 5px;
       border-radius: 6px;
@@ -182,7 +182,7 @@
           const lat = position.coords.latitude.toFixed(4);
           const lon = position.coords.longitude.toFixed(4);
           document.getElementById('location').innerText =
-            Latitude: ${lat}, Longitude: ${lon};
+            `Latitude: ${lat}, Longitude: ${lon}`;
         },
         function() {
           document.getElementById('location').innerText = "Location access denied.";
@@ -225,7 +225,7 @@
       contacts.forEach((c, index) => {
         const div = document.createElement("div");
         div.className = "contact-item";
-        div.innerText = ${index + 1}. ${c.name} - ${c.phone};
+        div.innerText = `${index + 1}. ${c.name} - ${c.phone}`;
         contactList.appendChild(div);
       });
     }
