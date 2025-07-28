@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Complaint Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f0f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #b30059;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    select, input[type="file"], button, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #b30059;
+      color: white;
+      cursor: pointer;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Register Complaint</h2>
+
+    <label for="complaintType">Type of Complaint:</label>
+    <select id="complaintType">
+      <option value="Enter">Enter</option>
+      <option value="Verbal Harassment">Verbal Harassment</option>
+      <option value="Physical Harassment">Physical Harassment</option>
+      <option value="Sexual Harassment">Sexual Harassment</option>
+      <option value="Discriminatory Harassment">Discriminatory Harassment</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="description">Complaint Description:</label>
+    <textarea rows="4" placeholder="Enter details..."></textarea>
+
+    <label for="videoUpload">Upload Video Evidence:</label>
+    <input type="file" id="videoUpload" accept="video/*">
+
+    <label>Record Video Instantly:</label>
+    <video id="preview" autoplay muted></video>
+    <button onclick="startRecording()">Start Recording</button>
+    <button onclick="stopRecording()">Stop Recording</button>
+
+    <br><br>
+    <button onclick="submitComplaint()">Submit Complaint</button>
+  </div>
+
+  <script>
+    let mediaRecorder;
+    let recordedChunks = [];
+
+    async function startRecording() {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      document.getElementById('preview').srcObject = stream;
+
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(stream);
+
+      mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) recordedChunks.push(e.data);
+      };
+
+      mediaRecorder.start();
+      alert('Recording started...');
+    }
+
+    function stopRecording() {
+      mediaRecorder.stop();
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const videoURL = URL.createObjectURL(blob);
+        document.getElementById('preview').src = videoURL;
+
+        // You can upload blob to server here if needed
+        alert('Recording stopped and preview shown.');
+      };
+    }
+
+    function submitComplaint() {
+      alert("Complaint submitted successfully!");
+      // You can integrate real submission logic using PHP/Node/AWS etc.
+    }
+  </script>
+</body>
+</html>
