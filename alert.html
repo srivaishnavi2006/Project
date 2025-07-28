@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Women Safety Alert</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffe6f0;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #ec407a;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .alert-symbol {
+      font-size: 4rem;
+      margin-bottom: 0.5rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    main {
+      padding: 2rem;
+    }
+
+    .alert-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .alert-button {
+      background-color: #de1616;
+      color: white;
+      font-size: 1.4rem;
+      padding: 1rem 2.5rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    }
+
+    .alert-button:hover {
+      background-color: #cc0000;
+    }
+
+    .subtext {
+      font-size: 0.95rem;
+      margin-top: 0.6rem;
+      color: #555;
+    }
+
+    .info-box, .tips-box, .contact-box {
+      background: #fff0f5;
+      border-left: 5px solid #ff3399;
+      border-radius: 10px;
+      padding: 1.2rem;
+      margin-top: 1.5rem;
+    }
+
+    .tips-box ul {
+      padding-left: 1.5rem;
+    }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      background: #ffd6e8;
+      padding: 1rem;
+      font-size: 0.95rem;
+      color: #77002b;
+    }
+
+    .contact-form input {
+      padding: 0.6rem;
+      margin-right: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .contact-form button {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background-color: #e6005c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .contact-form button:hover {
+      background-color: #cc0052;
+    }
+
+    .contact-list {
+      margin-top: 1rem;
+    }
+
+    .contact-item {
+      background-color: #ffe6f0;
+      padding: 0.5rem 1rem;
+      margin-bottom: 5px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="alert-symbol">🚨</div>
+    <h1>Women Safety Alert</h1>
+    <p>Your safety is our priority</p>
+  </header>
+
+  <main>
+    <section class="alert-section">
+      <h2>Emergency?</h2>
+      <button class="alert-button" onclick="sendAlert()">SEND ALERT NOW</button>
+      <p class="subtext">Your location will be shared with emergency contacts.</p>
+    </section>
+
+    <section class="info-box">
+      <h3>📍 Your Location</h3>
+      <p id="location">Detecting location...</p>
+    </section>
+
+    <section class="tips-box">
+      <h3>🛡️ Safety Tips</h3>
+      <ul>
+        <li>Share your location with someone you trust.</li>
+        <li>Use safe and verified transportation services.</li>
+        <li>Keep emergency contacts on speed dial.</li>
+        <li>Stay alert in unfamiliar environments.</li>
+      </ul>
+    </section>
+
+    <section class="contact-box">
+      <h3>📞 Save Emergency Contact</h3>
+      <div class="contact-form">
+        <input type="text" id="contactName" placeholder="Contact Name" />
+        <input type="text" id="contactPhone" placeholder="Phone Number" />
+        <button onclick="saveContact()">Save Contact</button>
+      </div>
+      <div class="contact-list" id="contactList"></div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Women Safety Helpdesk | Helpline: 1091 | Email: support@womensafety.in
+  </footer>
+
+  <script>
+    // Alert function
+    function sendAlert() {
+      alert("🚨 Emergency Alert Sent! Contacts will be notified.");
+    }
+
+    // Geolocation
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          const lat = position.coords.latitude.toFixed(4);
+          const lon = position.coords.longitude.toFixed(4);
+          document.getElementById('location').innerText =
+            Latitude: ${lat}, Longitude: ${lon};
+        },
+        function() {
+          document.getElementById('location').innerText = "Location access denied.";
+        }
+      );
+    } else {
+      document.getElementById('location').innerText = "Geolocation not supported.";
+    }
+
+    // Contact Save Logic
+    function saveContact() {
+      const name = document.getElementById("contactName").value.trim();
+      const phone = document.getElementById("contactPhone").value.trim();
+
+      if (!name || !phone) {
+        alert("Please enter both name and phone number.");
+        return;
+      }
+
+      const contact = { name, phone };
+      let contacts = JSON.parse(localStorage.getItem("contacts") || "[]");
+      contacts.push(contact);
+      localStorage.setItem("contacts", JSON.stringify(contacts));
+
+      displayContacts();
+      document.getElementById("contactName").value = "";
+      document.getElementById("contactPhone").value = "";
+    }
+
+    function displayContacts() {
+      const contactList = document.getElementById("contactList");
+      const contacts = JSON.parse(localStorage.getItem("contacts") || "[]");
+      contactList.innerHTML = "";
+
+      if (contacts.length === 0) {
+        contactList.innerHTML = "<p>No contacts saved yet.</p>";
+        return;
+      }
+
+      contacts.forEach((c, index) => {
+        const div = document.createElement("div");
+        div.className = "contact-item";
+        div.innerText = ${index + 1}. ${c.name} - ${c.phone};
+        contactList.appendChild(div);
+      });
+    }
+
+    // Load contacts on page load
+    window.onload = displayContacts;
+  </script>
+
+</body>
+</html>
