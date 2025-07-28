@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Student Dashboard - AWS</title>
-
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #e0f7f7; /* light teal background */
+      background-color: #e0f7f7;
       margin: 0;
       height: 100vh;
       display: flex;
@@ -16,7 +15,7 @@
     }
 
     header {
-      background-color: #008080; /* teal */
+      background-color: #008080;
       color: white;
       padding: 20px;
       text-align: center;
@@ -32,21 +31,28 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 30px 20px;
     }
 
     .dashboard {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 30px;
+    }
+
+    .row {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .module {
       background-color: #ffffff;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 128, 128, 0.3);
-      width: 280px;
+      width: 260px;
       padding: 25px;
       text-align: center;
       transition: transform 0.2s ease-in-out, box-shadow 0.3s ease;
@@ -63,22 +69,15 @@
     .icon {
       font-size: 40px;
       margin-bottom: 15px;
-      color: #006666; /* slightly darker teal */
+      color: #006666;
     }
 
     .module h2 {
       font-size: 1.3rem;
       margin-bottom: 10px;
-      color: #004d4d; /* darker teal text */
+      color: #004d4d;
     }
 
-    @media (min-width: 768px) {
-      .dashboard {
-        flex-direction: row;
-      }
-    }
-
-    /* Remove default link styles */
     a {
       text-decoration: none;
       color: inherit;
@@ -92,34 +91,49 @@
   </header>
 
   <div class="dashboard-container">
-    <section class="dashboard">
+    <div class="dashboard">
       
-      <!-- Complaint Module -->
-      <a href="complaint.html">
-        <div class="module">
-          <div class="icon">📝</div>
-          <h2>Complaint</h2>
-          <p>File a new complaint or view submitted ones.</p>
-        </div>
-      </a>
+      <!-- First row: 3 modules -->
+      <div class="row">
+        <a href="complaint.html">
+          <div class="module">
+            <div class="icon">📝</div>
+            <h2>Complaint</h2>
+            <p>File a new complaint or view submitted ones.</p>
+          </div>
+        </a>
 
-      <!-- Safety Measures -->
-      <div class="module">
-        <div class="icon">🛡️</div>
-        <h2>Safety Measures</h2>
-        <p>Read safety guidelines and self-protection tips.</p>
+        <div class="module">
+          <div class="icon">🛡️</div>
+          <h2>Safety Measures</h2>
+          <p>Read safety guidelines and self-protection tips.</p>
+        </div>
+
+        <a href="alert.html">
+          <div class="module">
+            <div class="icon">🚨</div>
+            <h2>Alert</h2>
+            <p>Use this in emergency to send an SOS alert.</p>
+          </div>
+        </a>
       </div>
 
-      <!-- Alert -->
-      <a href="alert.html">
+      <!-- Second row: 2 modules centered -->
+      <div class="row">
         <div class="module">
-          <div class="icon">🚨</div>
-          <h2>Alert</h2>
-          <p>Use this in emergency to send an SOS alert.</p>
+          <div class="icon">📢</div>
+          <h2>Claims</h2>
+          <p>Submit your demands and raise your voice effectively.</p>
         </div>
-      </a>
 
-    </section>
+        <div class="module">
+          <div class="icon">💬</div>
+          <h2>User Experience</h2>
+          <p>Share your feedback and personal safety experiences.</p>
+        </div>
+      </div>
+
+    </div>
   </div>
 
 </body>
