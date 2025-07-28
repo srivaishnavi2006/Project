@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard - AWS</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff0f5;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: #ec407a;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .dashboard-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .dashboard {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .module {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 280px;
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .module:hover {
+      transform: translateY(-5px);
+    }
+
+    .icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+      color: #c2185b;
+    }
+
+    .module h2 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    @media (min-width: 768px) {
+      .dashboard {
+        flex-direction: row;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome!</h1>
+  </header>
+
+  <div class="dashboard-container">
+    <section class="dashboard">
+      <div class="module">
+        <div class="icon">📝</div>
+        <h2>Complaint</h2>
+        <p>File a new complaint or view submitted ones.</p>
+      </div>
+
+      <div class="module">
+        <div class="icon">🛡️</div>
+        <h2>Safety Measures</h2>
+        <p>Read safety guidelines and self-protection tips.</p>
+      </div>
+
+      <div class="module">
+        <div class="icon">🚨</div>
+        <h2>Alert</h2>
+        <p>Use this in emergency to send an SOS alert.</p>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>

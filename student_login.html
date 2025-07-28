@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Login - AWS</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff0f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .login-box h2 {
+      text-align: center;
+      color: #c2185b;
+      margin-bottom: 30px;
+    }
+
+    .login-box label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .login-box button {
+      width: 100%;
+      background-color: #ec407a;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background-color: #d81b60;
+    }
+
+    .back-link {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .back-link a {
+      color: #ec407a;
+      text-decoration: none;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h2>Student Login</h2>
+    <form onsubmit="return validateLogin()">
+      <label for="rollno">Roll Number</label>
+      <input type="text" id="rollno" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+    <div class="back-link">
+      <a href="login_page.html">← Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    // ✅ Step 1: Define allowed roll number-password pairs
+    const studentCredentials = {
+      "23A91A05I4":	"i4@123",
+      "23A91A05D7":	"d7@123",
+      "23A91A05F8":	"f8@123",
+      "23MH1A4285":	"85@123" // Add more if needed
+
+    };
+
+    // ✅ Step 2: Validate form
+    function validateLogin() {
+      const roll = document.getElementById("rollno").value.trim();
+      const pass = document.getElementById("password").value.trim();
+
+      if (studentCredentials[roll] === pass) {
+        window.location.href = "student_dashboard.html";
+      } else {
+        alert("Invalid Roll Number or Password!");
+      }
+
+      return false; // Prevent form submission
+    }
+  </script>
+</body>
+</html>
