@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Claims Submission</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #ecf0f1;
+    }
+
+    header {
+      background-color: #008080;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #008080;
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #008080;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #005555;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Submit Your Claim</h1>
+  </header>
+
+  <div class="container">
+    <h2>Claim Form</h2>
+    <form id="claimForm">
+      <label for="claimId">Claim ID</label>
+      <input type="text" id="claimId" placeholder="e.g., CL123" required />
+
+      <label for="userName">Your Name</label>
+      <input type="text" id="userName" placeholder="Your full name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Your email" required />
+
+      <label for="description">Description</label>
+      <textarea id="description" rows="4" placeholder="Explain your claim" required></textarea>
+
+      <label for="date">Date</label>
+      <input type="date" id="date" required />
+
+      <button type="submit">Submit Claim</button>
+    </form>
+  </div>
+
+  <script>
+    const claimForm = document.getElementById('claimForm');
+    claimForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // For now, just alert form data — replace with API call
+      const claimData = {
+        claimId: document.getElementById('claimId').value,
+        userName: document.getElementById('userName').value,
+        email: document.getElementById('email').value,
+        description: document.getElementById('description').value,
+        date: document.getElementById('date').value,
+      };
+      console.log('Claim Submitted:', claimData);
+      alert('Claim submitted successfully!');
+      claimForm.reset();
+    });
+  </script>
+
+</body>
+</html>
