@@ -55,6 +55,7 @@
       padding: 8px;
       margin: 5px;
       width: auto;
+      cursor: pointer;
     }
 
     button:hover {
@@ -87,7 +88,7 @@
 <body>
   <div class="container">
     <h2>Register Your Complaint</h2>
-    <form id="complaintForm">
+    <form id="complaintForm" onsubmit="submitForm(event)">
       <label for="description">Description</label>
       <textarea id="description" rows="4" placeholder="Enter full details..." required></textarea>
 
@@ -105,6 +106,12 @@
 
       <label for="media">Upload Proof from Gallery (Audio / Video / Photo)</label>
       <input type="file" id="media" accept="image/*,video/*,audio/*">
+
+      <label for="image">Upload Image (optional)</label>
+      <input type="file" id="image" accept="image/*">
+
+      <label for="audio">Upload Audio File (optional)</label>
+      <input type="file" id="audio" accept="audio/*">
 
       <div class="section-title">Or Capture Proof Instantly</div>
 
@@ -222,8 +229,9 @@
       }
     }
 
-    document.getElementById("complaintForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+    async function submitForm(event) {
+      event.preventDefault();
+
       const formData = new FormData();
       formData.append('description', document.getElementById('description').value);
       formData.append('date', document.getElementById('date').value);
@@ -233,17 +241,55 @@
       const mediaFile = document.getElementById('media').files[0];
       if (mediaFile) formData.append('media', mediaFile);
 
+      // Send to local Flask server
       fetch('http://3.236.191.67:5000/submit', {
           method: 'POST',
           body: formData
       })
       .then(res => res.json())
       .then(data => {
-          alert("Complaint Submitted! ID: " + data.id);
-          document.getElementById("complaintForm").reset();
+          alert("Complaint submitted to local server! ID: " + data.id);
       })
-      .catch(err => alert("Error submitting complaint"));
-    });
+      .catch(err => {
+          alert("Error submitting to local server");
+          console.error(err);
+      });
+
+      // Send to AWS API
+      const imageFile = document.getElementById("image").files[0];
+      const audioFile = document.getElementById("audio").files[0];
+
+      const toBase64 = file => new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result.split(',')[1]);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+      });
+
+      const awsData = {
+          description: document.getElementById("description").value,
+          location: document.getElementById("location").value,
+          date: document.getElementById("date").value,
+          time: document.getElementById("time").value,
+          phone: document.getElementById("phone").value || "",
+          image: imageFile ? await toBase64(imageFile) : "",
+          audio: audioFile ? await toBase64(audioFile) : ""
+      };
+
+      fetch("https://qlwvgwcjo3.execute-api.us-east-1.amazonaws.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(awsData)
+      })
+      .then(res => res.json())
+      .then(data => alert("Complaint submitted to AWS: " + (data.message || data.error)))
+      .catch(err => {
+          alert("Error submitting to AWS");
+          console.error(err);
+      });
+
+      document.getElementById("complaintForm").reset();
+    }
   </script>
 </body>
 </html>
