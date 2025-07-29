@@ -87,49 +87,50 @@
 <body>
   <div class="container">
     <h2>Register Your Complaint</h2>
+    <form id="complaintForm">
+      <label for="description">Description</label>
+      <textarea id="description" rows="4" placeholder="Enter full details..." required></textarea>
 
-    <label for="description">Description</label>
-    <textarea id="description" rows="4" placeholder="Enter full details..."></textarea>
+      <label for="date">Date of Incident</label>
+      <input type="date" id="date" required>
 
-    <label for="date">Date of Incident</label>
-    <input type="date" id="date">
+      <label for="time">Time of Incident</label>
+      <input type="time" id="time" required>
 
-    <label for="time">Time of Incident</label>
-    <input type="time" id="time">
+      <label for="location">Location</label>
+      <input type="text" id="location" placeholder="Enter exact location..." required>
 
-    <label for="location">Location</label>
-    <input type="text" id="location" placeholder="Enter exact location...">
+      <label for="phone">Phone Number (optional)</label>
+      <input type="tel" id="phone" placeholder="Enter your contact number (optional)">
 
-    <label for="phone">Phone Number (optional)</label>
-    <input type="tel" id="phone" placeholder="Enter your contact number (optional)">
+      <label for="media">Upload Proof from Gallery (Audio / Video / Photo)</label>
+      <input type="file" id="media" accept="image/*,video/*,audio/*">
 
-    <label for="mediaUpload">Upload Proof from Gallery (Audio / Video / Photo)</label>
-    <input type="file" id="mediaUpload" accept="image/,video/,audio/*">
+      <div class="section-title">Or Capture Proof Instantly</div>
 
-    <div class="section-title">Or Capture Proof Instantly</div>
-
-    <div class="record-section">
-      <label>Camera Access (Photo or Video):</label>
-      <video id="videoPreview" playsinline autoplay muted></video>
-      <canvas id="photoCanvas" style="display:none;"></canvas>
-      <div>
-        <button onclick="startCamera()">Start Camera</button>
-        <button onclick="takePhoto()">📷 Capture Photo</button>
-        <button onclick="startVideoRecording()">🎥 Start Video</button>
-        <button onclick="stopVideoRecording()">⏹ Stop Video</button>
+      <div class="record-section">
+        <label>Camera Access (Photo or Video):</label>
+        <video id="videoPreview" playsinline autoplay muted></video>
+        <canvas id="photoCanvas" style="display:none;"></canvas>
+        <div>
+          <button type="button" onclick="startCamera()">Start Camera</button>
+          <button type="button" onclick="takePhoto()">📷 Capture Photo</button>
+          <button type="button" onclick="startVideoRecording()">🎥 Start Video</button>
+          <button type="button" onclick="stopVideoRecording()">⏹ Stop Video</button>
+        </div>
       </div>
-    </div>
 
-    <div class="record-section">
-      <label>Audio Recording:</label>
-      <audio id="audioPlayback" controls></audio>
-      <div>
-        <button onclick="startAudioRecording()">🎙️ Start Audio</button>
-        <button onclick="stopAudioRecording()">⏹ Stop Audio</button>
+      <div class="record-section">
+        <label>Audio Recording:</label>
+        <audio id="audioPlayback" controls></audio>
+        <div>
+          <button type="button" onclick="startAudioRecording()">🎙️ Start Audio</button>
+          <button type="button" onclick="stopAudioRecording()">⏹ Stop Audio</button>
+        </div>
       </div>
-    </div>
 
-    <button onclick="submitComplaint()">Submit Complaint</button>
+      <button type="submit">Submit Complaint</button>
+    </form>
   </div>
 
   <script>
@@ -221,9 +222,28 @@
       }
     }
 
-    function submitComplaint() {
-      alert("Complaint submitted successfully!\n(This is a front-end demo. Backend not yet connected.)");
-    }
+    document.getElementById("complaintForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append('description', document.getElementById('description').value);
+      formData.append('date', document.getElementById('date').value);
+      formData.append('time', document.getElementById('time').value);
+      formData.append('location', document.getElementById('location').value);
+      formData.append('phone', document.getElementById('phone').value);
+      const mediaFile = document.getElementById('media').files[0];
+      if (mediaFile) formData.append('media', mediaFile);
+
+      fetch('http://3.236.191.67:5000/submit', {
+          method: 'POST',
+          body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+          alert("Complaint Submitted! ID: " + data.id);
+          document.getElementById("complaintForm").reset();
+      })
+      .catch(err => alert("Error submitting complaint"));
+    });
   </script>
 </body>
 </html>
