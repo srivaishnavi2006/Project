@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Women Safety Community - User Experiences</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #e0f7f7; /* light teal background */
+    }
+
+    .header {
+      background-color: #008080; /* dark teal */
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 90vh;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .message {
+      max-width: 60%;
+      margin-bottom: 12px;
+      padding: 10px 15px;
+      border-radius: 15px;
+      line-height: 1.4;
+    }
+
+    .user {
+      background-color: white;
+      align-self: flex-start;
+      border: 1px solid #80cbc4; /* light teal border */
+    }
+
+    .me {
+      background-color: #b2dfdb; /* soft teal */
+      align-self: flex-end;
+    }
+
+    .input-box {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: white;
+      border-top: 1px solid #008080;
+      padding: 10px;
+      display: flex;
+    }
+
+    .input-box input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #008080;
+      border-radius: 20px;
+      outline: none;
+    }
+
+    .input-box button {
+      background-color: #008080;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-left: 10px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .input-box button:hover {
+      background-color: #006666;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">User Experiences Community</div>
+
+  <div class="chat-container" id="chat">
+    <div class="message user">Hi everyone, I used the SOS button yesterday and it worked perfectly. So thankful!</div>
+    <div class="message me">That's great to hear! I also found the emergency contact feature very helpful.</div>
+    <div class="message user">This app really makes me feel safer while traveling at night.</div>
+  </div>
+
+  <div class="input-box">
+    <input type="text" id="messageInput" placeholder="Share your experience..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const text = input.value.trim();
+      if (text !== '') {
+        const msg = document.createElement('div');
+        msg.className = 'message me';
+        msg.textContent = text;
+        document.getElementById('chat').appendChild(msg);
+        input.value = '';
+        document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+      }
+    }
+  </script>
+
+</body>
+</html>
