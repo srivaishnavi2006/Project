@@ -7,11 +7,11 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #e0f7f7; /* light teal background */
+      background-color: #e0f7f7;
     }
 
     .header {
-      background-color: #008080; /* dark teal */
+      background-color: #008080;
       color: white;
       padding: 20px;
       text-align: center;
@@ -38,11 +38,11 @@
     .user {
       background-color: white;
       align-self: flex-start;
-      border: 1px solid #80cbc4; /* light teal border */
+      border: 1px solid #a7e0e0;
     }
 
     .me {
-      background-color: #b2dfdb; /* soft teal */
+      background-color: #b2dfdb;
       align-self: flex-end;
     }
 
@@ -51,7 +51,7 @@
       bottom: 0;
       width: 100%;
       background-color: white;
-      border-top: 1px solid #008080;
+      border-top: 1px solid #80cbc4;
       padding: 10px;
       display: flex;
     }
@@ -59,13 +59,13 @@
     .input-box input {
       flex: 1;
       padding: 10px;
-      border: 1px solid #008080;
+      border: 1px solid #4db6ac;
       border-radius: 20px;
       outline: none;
     }
 
     .input-box button {
-      background-color: #008080;
+      background-color: #009999;
       color: white;
       border: none;
       padding: 10px 20px;
@@ -95,19 +95,6 @@
   </div>
 
   <script>
-    // Load stored messages
-    window.onload = function () {
-      const storedMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
-      const chat = document.getElementById('chat');
-      storedMessages.forEach(msg => {
-        const msgDiv = document.createElement('div');
-        msgDiv.className = 'message me';
-        msgDiv.textContent = msg;
-        chat.appendChild(msgDiv);
-      });
-      chat.scrollTop = chat.scrollHeight;
-    }
-
     function sendMessage() {
       const input = document.getElementById('messageInput');
       const text = input.value.trim();
@@ -115,15 +102,10 @@
         const msg = document.createElement('div');
         msg.className = 'message me';
         msg.textContent = text;
-        const chat = document.getElementById('chat');
-        chat.appendChild(msg);
+        document.getElementById('chat').appendChild(msg);
         input.value = '';
-        chat.scrollTop = chat.scrollHeight;
-
-        // Store to localStorage
-        const storedMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
-        storedMessages.push(text);
-        localStorage.setItem('chatMessages', JSON.stringify(storedMessages));
+        // Auto scroll to bottom
+        document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
       }
     }
   </script>
