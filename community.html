@@ -95,6 +95,19 @@
   </div>
 
   <script>
+    // Load stored messages
+    window.onload = function () {
+      const storedMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+      const chat = document.getElementById('chat');
+      storedMessages.forEach(msg => {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'message me';
+        msgDiv.textContent = msg;
+        chat.appendChild(msgDiv);
+      });
+      chat.scrollTop = chat.scrollHeight;
+    }
+
     function sendMessage() {
       const input = document.getElementById('messageInput');
       const text = input.value.trim();
@@ -102,9 +115,15 @@
         const msg = document.createElement('div');
         msg.className = 'message me';
         msg.textContent = text;
-        document.getElementById('chat').appendChild(msg);
+        const chat = document.getElementById('chat');
+        chat.appendChild(msg);
         input.value = '';
-        document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+        chat.scrollTop = chat.scrollHeight;
+
+        // Store to localStorage
+        const storedMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+        storedMessages.push(text);
+        localStorage.setItem('chatMessages', JSON.stringify(storedMessages));
       }
     }
   </script>
