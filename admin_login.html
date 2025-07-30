@@ -2,137 +2,131 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin Dashboard - Teal Theme</title>
-  <!-- Font Awesome -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login - AWS</title>
   <style>
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #b5dbdb;
       display: flex;
-    }
-
-    .sidebar {
-      width: 220px;
-      background-color: #006666;
-      color: #ecf0f1;
-      padding-top: 20px;
+      align-items: center;
+      justify-content: center;
       height: 100vh;
+      margin: 0;
     }
 
-    .sidebar h2 {
+    .login-box {
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .login-box h2 {
       text-align: center;
-      margin-bottom: 20px;
+      color: #178c90;
+      margin-bottom: 30px;
     }
 
-    .sidebar a {
+    .login-box label {
       display: block;
-      color: #ecf0f1;
-      padding: 10px 20px;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .login-box button {
+      width: 100%;
+      background-color: #1a6a71;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background-color: #145b5f;
+    }
+
+    .back-link {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .back-link a {
+      color: #178c90;
       text-decoration: none;
     }
 
-    .sidebar a:hover {
-      background-color: #005555;
+    .back-link a:hover {
+      text-decoration: underline;
     }
 
-    .main {
-      flex: 1;
-      background-color: #ecf0f1;
-      padding: 20px;
-      overflow-y: auto;
-    }
-
-    .header {
-      background-color: #008080;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 4px;
-    }
-
-    .modules {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+    .error {
+      color: red;
       text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      font-family: Arial, sans-serif;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .card i {
-      font-size: 28px;
-      color: #008080;
       margin-bottom: 10px;
-    }
-
-    .card h3 {
-      margin: 10px 0 5px;
-      font-size: 1.3em; /* Increased from 1.2em to 1.3em */
-      color: #008080;
-      font-weight: bold;
-      font-family: Arial, sans-serif;
-    }
-
-    .card p {
-      font-size: 1em; /* Increased from 0.9em to 1em */
-      color: #444;
-      font-family: Arial, sans-serif;
     }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <h2>Admin</h2>
-    <a href="#">Dashboard</a>
-    <a href="#">Complaint</a>
-    <a href="#">Claims</a>
-    <a href="#">Alert</a>
-    <a href="#">Logout</a>
-  </div>
 
-  <div class="main">
-    <div class="header">
-      <h1>Welcome, Admin</h1>
-    </div>
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <div class="error" id="error-msg"></div>
+    <form id="admin-login-form">
+      <label for="username">Username</label>
+      <input type="text" id="username" required>
 
-    <h2>Modules</h2>
-    <div class="modules">
-      <div class="card">
-        <i class="fas fa-comments"></i>
-        <h3>Complaint</h3>
-        <p>Manage and view complaints</p>
-      </div>
-      <div class="card">
-        <i class="fas fa-file-alt"></i>
-        <h3>Claims</h3>
-        <p>Handle user claims</p>
-      </div>
-      <div class="card">
-        <i class="fas fa-exclamation-circle"></i>
-        <h3>Alert</h3>
-        <p>View alerts and notifications</p>
-      </div>
-      <div class="card">
-        <i class="fas fa-user-check"></i>
-        <h3>User Experience</h3>
-        <p>Track and analyze user experience</p>
-      </div>
+      <label for="password">Password</label>
+      <input type="password" id="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+    <div class="back-link">
+      <a href="login_page.html">← Back to Home</a>
     </div>
   </div>
+
+  <script>
+    document.getElementById("admin-login-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("error-msg");
+
+      // Predefined credentials
+      const studentCredentials = {
+        "23A91A05I4": "12345",
+        "23A91A05D7": "12345",
+        "23A91A05F8": "12345", 
+        "23P31A1249": "12345",
+        "23P31A42C1": "12345"
+      };
+
+      // Check if username exists and password matches
+      if (studentCredentials[username] && studentCredentials[username] === password) {
+        // Successful login, redirect
+        window.location.href = "admin_dashboard.html";
+      } else {
+        // Invalid login
+        errorMsg.textContent = "Invalid username or password.";
+      }
+    });
+  </script>
+
 </body>
 </html>
