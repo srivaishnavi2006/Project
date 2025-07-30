@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <title>Admin Dashboard - Teal Theme</title>
-  <!-- Load Font Awesome -->
+  <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      display: flex;
     }
 
     .sidebar {
@@ -17,10 +18,12 @@
       background-color: #006666;
       color: #ecf0f1;
       padding-top: 20px;
+      height: 100vh;
     }
 
     .sidebar h2 {
       text-align: center;
+      margin-bottom: 20px;
     }
 
     .sidebar a {
@@ -38,109 +41,98 @@
       flex: 1;
       background-color: #ecf0f1;
       padding: 20px;
-      overflow: auto;
+      overflow-y: auto;
     }
 
     .header {
       background-color: #008080;
       color: white;
       padding: 10px 20px;
+      border-radius: 4px;
     }
 
     .modules {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 20px;
       margin-top: 30px;
     }
 
     .card {
       background: white;
-      padding: 30px;
+      padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
       text-align: center;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-family: Arial, sans-serif;
     }
 
     .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-
-    .card h3 {
-      margin: 15px 0 5px;
-      font-size: 1.4em;
-      letter-spacing: 1px;
-      color: #008080;
-      font-weight: bold;
-      transition: color 0.2s ease;
-    }
-
-    .card:hover h3 {
-      color: #005555;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
     }
 
     .card i {
-      font-size: 40px;
+      font-size: 28px;
       color: #008080;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      margin: 10px 0 5px;
+      font-size: 1.3em; /* Increased from 1.2em to 1.3em */
+      color: #008080;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
     }
 
     .card p {
-      font-size: 0.95em;
-      color: #333;
-    }
-
-    #dashboard {
-      display: flex;
-      height: 100vh;
+      font-size: 1em; /* Increased from 0.9em to 1em */
+      color: #444;
+      font-family: Arial, sans-serif;
     }
   </style>
 </head>
 <body>
+  <div class="sidebar">
+    <h2>Admin</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Complaint</a>
+    <a href="#">Claims</a>
+    <a href="#">Alert</a>
+    <a href="#">Logout</a>
+  </div>
 
-  <!-- Dashboard (Now loads by default) -->
-  <div id="dashboard">
-    <div class="sidebar">
-      <h2>Admin</h2>
-      <a href="#">Dashboard</a>
-      <a href="#">Complaint</a>
-      <a href="#">Claims</a>
-      <a href="#">Alert</a>
-      <a href="#" onclick="logout()">Logout</a>
+  <div class="main">
+    <div class="header">
+      <h1>Welcome, Admin</h1>
     </div>
-    <div class="main">
-      <div class="header">
-        <h1>Welcome, Admin</h1>
-      </div>
 
-      <h2>Modules</h2>
-      <div class="modules">
-        <div class="card">
-          <i class="fas fa-comments"></i>
-          <h3>Complaint</h3>
-          <p>Manage and view complaints</p>
-        </div>
-        <div class="card">
-          <i class="fas fa-file-alt"></i>
-          <h3>Claims</h3>
-          <p>Handle user claims</p>
-        </div>
-        <div class="card">
-          <i class="fas fa-exclamation-circle"></i>
-          <h3>Alert</h3>
-          <p>View alerts and notifications</p>
-        </div>
+    <h2>Modules</h2>
+    <div class="modules">
+      <div class="card">
+        <i class="fas fa-comments"></i>
+        <h3>Complaint</h3>
+        <p>Manage and view complaints</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-file-alt"></i>
+        <h3>Claims</h3>
+        <p>Handle user claims</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-exclamation-circle"></i>
+        <h3>Alert</h3>
+        <p>View alerts and notifications</p>
+      </div>
+      <div class="card">
+        <i class="fas fa-user-check"></i>
+        <h3>User Experience</h3>
+        <p>Track and analyze user experience</p>
       </div>
     </div>
   </div>
-
-  <script>
-    function logout() {
-      alert("Logout clicked — redirect to login or another page if needed.");
-    }
-  </script>
-
 </body>
 </html>
