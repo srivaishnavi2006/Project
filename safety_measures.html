@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Safety Measures</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #e0f7f7;
+      display: flex;
+    }
+
+    /* Sidebar styling */
+    .sidebar {
+      width: 200px;
+      background-color: #008080;
+      color: white;
+      height: 100vh;
+      padding-top: 30px;
+      position: fixed;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 12px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid #ffffff44;
+    }
+
+    .sidebar ul li:hover {
+      background-color: #006666;
+    }
+
+    /* Content section */
+    .content {
+      margin-left: 200px;
+      padding: 30px;
+      flex-grow: 1;
+    }
+
+    h1 {
+      text-align: center;
+      color: #008080;
+    }
+
+    .section {
+      margin-bottom: 40px;
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .images, .videos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .images img {
+      width: 300px;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .videos iframe {
+      width: 350px;
+      height: 200px;
+      border: none;
+      border-radius: 12px;
+    }
+
+    .tips {
+      max-width: 800px;
+      margin: auto;
+      background-color: #d0f0f0;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .tips ul {
+      list-style-type: square;
+      padding-left: 20px;
+    }
+
+    .tips li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+      <li onclick="showSection('images')">Photos</li>
+      <li onclick="showSection('videos')">Videos</li>
+      <li onclick="showSection('tips')">Safety Tips</li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h1>Safety Measures</h1>
+
+    <!-- 🥋 Self-Defense Images -->
+    <div id="images" class="section active">
+      <h2 style="text-align:center; color:#008080;">Self-Defense Techniques</h2>
+      <!-- Top Row -->
+      <div class="images">
+        <img src="C:\Users\HP\OneDrive\Desktop\Iship\Image1.jpg" alt="Self Defense 1">
+        <img src="C:\Users\HP\OneDrive\Desktop\Iship\Image2.jpg" alt="Self Defense 2">
+        <img src="C:\Users\HP\OneDrive\Desktop\Iship\Image3.png" alt="Self Defense 3">
+      </div>
+      <!-- Bottom Row -->
+      <div class="images">
+        <img src="C:\Users\HP\OneDrive\Desktop\Iship\Image4.png" alt="Self Defense 4">
+        <img src="C:\Users\HP\OneDrive\Desktop\Iship\Image5.png" alt="Self Defense 5">
+      </div>
+    </div>
+
+    <!-- 🎥 Videos -->
+    <div id="videos" class="section">
+      <h2 style="text-align:center; color:#008080;">Watch & Learn</h2>
+      <div class="videos">
+        <iframe src="https://www.youtube.com/embed/KVpxP3ZZtAc" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/EDCr-3D6jQ0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/jAh0cU1J5zk" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <!-- 📜 Safety Tips -->
+    <div id="tips" class="section">
+      <h2 style="text-align:center; color:#008080;">Important Safety Tips</h2>
+      <div class="tips">
+        <ul>
+          <li>Always be aware of your surroundings.</li>
+          <li>Avoid walking alone at night.</li>
+          <li>Carry a whistle or pepper spray for emergency.</li>
+          <li>Share your location with a trusted contact.</li>
+          <li>Don’t accept rides from strangers.</li>
+          <li>Learn basic self-defense moves.</li>
+          <li>Keep your phone fully charged when going out.</li>
+          <li>Avoid distractions like using headphones while walking in isolated areas.</li>
+          <li>Trust your instincts – if a situation feels wrong, leave immediately.</li>
+          <li>Stay in well-lit and populated areas whenever possible.</li>
+          <li>Let someone know your travel plans and estimated time of return.</li>
+          <li>Use trusted public transport or verified cab services (e.g., Uber, Ola).</li>
+          <li>Don't overshare your personal information or location on social media.</li>
+          <li>Use personal safety apps (like “bSafe”, “Citizen”, or “My Safetipin”).</li>
+          <li>Avoid carrying large amounts of cash or flashy jewelry in public.</li>
+          <li>Lock your doors and windows, even when you're inside.</li>
+          <li>Keep emergency contacts on speed dial.</li>
+          <li>If attacked, aim for vulnerable areas like eyes, throat, and groin.</li>
+          <li>Take self-defense or martial arts classes for confidence and skill.</li>
+          <li>Be cautious of strangers offering unsolicited help or asking personal questions.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>
